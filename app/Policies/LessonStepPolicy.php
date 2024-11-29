@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\LessonStep;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class LessonStepPolicy
 {
@@ -13,7 +12,7 @@ class LessonStepPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +20,7 @@ class LessonStepPolicy
      */
     public function view(User $user, LessonStep $lessonStep): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,7 +28,7 @@ class LessonStepPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +36,7 @@ class LessonStepPolicy
      */
     public function update(User $user, LessonStep $lessonStep): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -45,7 +44,7 @@ class LessonStepPolicy
      */
     public function delete(User $user, LessonStep $lessonStep): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -53,7 +52,7 @@ class LessonStepPolicy
      */
     public function restore(User $user, LessonStep $lessonStep): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -61,6 +60,6 @@ class LessonStepPolicy
      */
     public function forceDelete(User $user, LessonStep $lessonStep): bool
     {
-        return false;
+        return true;
     }
 }
