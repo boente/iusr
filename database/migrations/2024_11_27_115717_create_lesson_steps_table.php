@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('lesson_steps', function (Blueprint $table) {
             $table->id();
-            $table->integer('number');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->foreignId('lesson_id')->constrained()->onDelete('cascade');
+            $table->integer('order')->default(0);
             $table->timestamps();
         });
     }

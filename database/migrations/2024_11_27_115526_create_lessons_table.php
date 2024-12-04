@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('comparison_method')->default('exact');
             $table->string('type')->default('theory');
-            $table->integer('time_to_complete');
+            $table->integer('time_to_complete')->default(0);
             $table->foreignId('chapter_id')->constrained()->onDelete('cascade');
+            $table->integer('order')->default(0);
             $table->timestamps();
         });
     }

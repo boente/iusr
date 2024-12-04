@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Forms\Components\CourseStructure;
 use App\Filament\Resources\CourseResource\Pages;
-use App\Filament\Resources\CourseResource\RelationManagers;
 use App\Models\Course;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -28,7 +28,9 @@ class CourseResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('skill_level')
                     ->required(),
-            ]);
+                CourseStructure::make(),
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -64,7 +66,7 @@ class CourseResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\LessonsRelationManager::class,
+
         ];
     }
 
