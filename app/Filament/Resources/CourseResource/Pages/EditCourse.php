@@ -16,12 +16,4 @@ class EditCourse extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-
-    public function refreshReltion($relation)
-    {
-        $this->data = [
-            ...$this->data,
-            $relation => $this->getRecord()->$relation->toArray(),
-        ];
-    }
 }

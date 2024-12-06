@@ -17,6 +17,15 @@ class CourseResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function viewForm(Form $form): Form
+    {
+        return $form
+            ->schema([
+                CourseStructure::make(),
+            ])
+            ->columns(1);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -28,7 +37,6 @@ class CourseResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('skill_level')
                     ->required(),
-                CourseStructure::make(),
             ])
             ->columns(1);
     }
@@ -36,6 +44,7 @@ class CourseResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordUrl(fn ($record) => route('filament.admin.resources.courses.view', $record))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
@@ -75,6 +84,7 @@ class CourseResource extends Resource
         return [
             'index' => Pages\ListCourses::route('/'),
             'create' => Pages\CreateCourse::route('/create'),
+            'view' => Pages\ViewCourse::route('/{record}'),
             'edit' => Pages\EditCourse::route('/{record}/edit'),
         ];
     }
