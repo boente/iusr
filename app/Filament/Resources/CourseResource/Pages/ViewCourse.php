@@ -4,6 +4,7 @@ namespace App\Filament\Resources\CourseResource\Pages;
 
 use App\Filament\Resources\CourseResource;
 use Filament\Actions;
+use Filament\Forms\Form;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
 
@@ -26,18 +27,9 @@ class ViewCourse extends EditRecord
         ];
     }
 
-    protected function getForms(): array
+    public function form(Form $form): Form
     {
-        return [
-            'form' => $this->form(static::getResource()::viewForm(
-                $this->makeForm()
-                    ->operation('edit')
-                    ->model($this->getRecord())
-                    ->statePath($this->getFormStatePath())
-                    ->columns($this->hasInlineLabels() ? 1 : 2)
-                    ->inlineLabel($this->hasInlineLabels()),
-            )),
-        ];
+        return $form->operation('edit-structure');
     }
 
     protected function getFormActions(): array

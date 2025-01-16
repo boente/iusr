@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Forms\Components\LessonSteps;
 use App\Filament\Resources\LessonResource\Pages;
+use App\Livewire\Judge0;
+use App\Livewire\LessonEditor;
 use App\Models\Lesson;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -20,19 +22,7 @@ class LessonResource extends Resource
     {
         return $form
             ->schema([
-                LessonSteps::make('steps')
-                    ->relationship()
-                    ->orderColumn('order')
-                    ->itemLabel(fn (array $state): ?string => isset($state['order']) ? ('Step '.$state['order']) : null)
-                    ->addActionLabel('Add step')
-                    ->addActionAlignment(Alignment::Left)
-                    ->schema([
-                        Forms\Components\RichEditor::make('content')
-                            ->required(),
-                        Forms\Components\Textarea::make('code')
-                            ->required(),
-                    ])
-                    ->columns(2),
+                Forms\Components\Livewire::make(LessonEditor::class),
             ])
             ->columns(1);
     }

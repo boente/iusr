@@ -28,6 +28,11 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->sidebarCollapsibleOnDesktop()
+            ->viteTheme([
+                'resources/css/filament/admin/theme.css',
+                'resources/css/filament/admin/theme.js',
+            ])
             ->colors([
                 'primary' => Color::Cyan,
             ])

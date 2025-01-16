@@ -17,25 +17,21 @@ class CourseResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function viewForm(Form $form): Form
-    {
-        return $form
-            ->schema([
-                CourseStructure::make(),
-            ])
-            ->columns(1);
-    }
-
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                CourseStructure::make()
+                    ->hidden(fn (string $operation) => $operation !== 'edit-structure'),
                 Forms\Components\TextInput::make('title')
+                    ->hidden(fn (string $operation) => $operation !== 'edit')
                     ->required(),
                 Forms\Components\Textarea::make('description')
+                    ->hidden(fn (string $operation) => $operation !== 'edit')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('skill_level')
+                    ->hidden(fn (string $operation) => $operation !== 'edit')
                     ->required(),
             ])
             ->columns(1);

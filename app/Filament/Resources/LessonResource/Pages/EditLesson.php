@@ -10,6 +10,8 @@ class EditLesson extends EditRecord
 {
     protected static string $resource = LessonResource::class;
 
+    protected static string $layout = 'components.layout.blank';
+
     public function getTitle(): string|Htmlable
     {
         return 'Write Lesson';
