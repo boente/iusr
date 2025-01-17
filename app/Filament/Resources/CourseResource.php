@@ -24,14 +24,18 @@ class CourseResource extends Resource
                 CourseStructure::make()
                     ->hidden(fn (string $operation) => $operation !== 'edit-structure'),
                 Forms\Components\TextInput::make('title')
-                    ->hidden(fn (string $operation) => $operation !== 'edit')
+                    ->hidden(fn (string $operation) => $operation === 'edit-structure')
                     ->required(),
                 Forms\Components\Textarea::make('description')
-                    ->hidden(fn (string $operation) => $operation !== 'edit')
+                    ->hidden(fn (string $operation) => $operation === 'edit-structure')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('skill_level')
-                    ->hidden(fn (string $operation) => $operation !== 'edit')
+                    ->hidden(fn (string $operation) => $operation === 'edit-structure')
+                    ->required(),
+                Forms\Components\Select::make('language_id')
+                    ->hidden(fn (string $operation) => $operation === 'edit-structure')
+                    ->relationship('language', 'name')
                     ->required(),
             ])
             ->columns(1);

@@ -13,7 +13,10 @@ class Lesson extends Model
 
     public function steps()
     {
-        return $this->hasMany(LessonStep::class)->orderBy('order');
+        return $this->hasMany(LessonStep::class)
+            ->chaperone('lesson')
+            ->orderBy('order')
+            ->orderBy('id');
     }
 
     public function users()

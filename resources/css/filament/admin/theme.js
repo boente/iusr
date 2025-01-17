@@ -5,6 +5,7 @@ import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
 import { highlightActiveLine, keymap, EditorView } from '@codemirror/view';
 import { oneDark } from "@codemirror/theme-one-dark";
 import { javascript } from "@codemirror/lang-javascript";
+import { r } from "codemirror-lang-r";
 
 Alpine.data('codemirror', (data) => ({
     ...data,
@@ -26,12 +27,13 @@ Alpine.data('codemirror', (data) => ({
                         ...defaultKeymap,
                         ...historyKeymap,
                     ]),
-                    javascript(),
+                    // javascript(),
+                    r(),
                     syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
                     oneDark,
                     EditorView.updateListener.of((update) => {
                         if (update.docChanged) {
-                            this.$wire.set('code', this.editor.state.doc.toString(), false);
+                            this.$dispatch('input', this.editor.state.doc.toString());
                         }
                     }),
                 ],

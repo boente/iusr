@@ -5,24 +5,30 @@ namespace App\Executors;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use InvalidArgumentException;
 
-class Judge0
+class Judge0 extends Executor
 {
-    public static function execute(string $code)
+    public static function execute(string $code, string $language): array
     {
-        $response = Cache::remember(md5($code), 60 * 60, function () use ($code) {
-            return self::runSubmission($code);
+        $key = md5($code.$language);
+
+        $response = Cache::remember($key, 60 * 60, function () use ($code, $language) {
+            return self::runSubmission($code, $language);
         });
 
-        return $response['stdout'];
+        return [
+            'output' => $response['stdout'],
+            'error' => $response['stderr'],
+        ];
     }
 
-    public static function runSubmission(string $code): array
+    public static function runSubmission(string $code, string $language): array
     {
-        $response = self::createSubmission($code);
+        $response = self::createSubmission($code, $language);
 
         $token = $response['token'];
-        
+
         do {
             usleep(2.5 * 1000000);
             $response = self::fetchSubmission($token);
@@ -31,12 +37,18 @@ class Judge0
         return $response;
     }
 
-    public static function createSubmission(string $code): array
+    public static function createSubmission(string $code, string $language): array
     {
+        $languageId = match ($language) {
+            'javascript' => 63,
+            'r' => 80,
+            default => throw new InvalidArgumentException("Unsupported language: {$language}"),
+        };
+
         $response = self::makeRequest()
             ->post('https://judge0-ce.p.rapidapi.com/submissions', [
                 'source_code' => $code,
-                'language_id' => 63,
+                'language_id' => $languageId,
             ]);
 
         return $response->json();

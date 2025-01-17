@@ -2,29 +2,60 @@
 
 namespace App\Livewire;
 
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
-use Livewire\Attributes\Url;
 
 class LessonEditor extends Component
 {
     public ?Model $record = null;
 
-    public ?Model $step = null;
+    public $stepNumber;
 
     public function mount()
     {
-        $this->step = $this->record->steps->first();
+        $this->stepNumber = $this->steps->count() ? 1 : null;
+    }
+
+    #[Computed]
+    public function steps()
+    {
+        return $this->record->steps;
+    }
+
+    #[Computed]
+    public function step()
+    {
+        return $this->stepNumber ? $this->steps->slice($this->stepNumber - 1, 1)->first() : null;
+    }
+
+    public function addStep()
+    {
+        unset($this->steps);
+        unset($this->step);
+
+        $this->record->steps()->create();
+        $this->stepNumber = $this->steps->count();
+
+        Notification::make()
+            ->title('Step added successfully')
+            ->success()
+            ->send();
     }
 
     public function nextStep()
     {
-        $this->step = $this->record->steps->where('order', '>', $this->step->id)->first();
+        unset($this->step);
+
+        $this->stepNumber = min($this->steps->count(), $this->stepNumber + 1);
     }
-    
+
     public function previousStep()
     {
-        $this->step = $this->record->steps->where('order', '<', $this->step->id)->last();
+        unset($this->step);
+
+        $this->stepNumber = max(0, $this->stepNumber - 1);
     }
 
     public function render()

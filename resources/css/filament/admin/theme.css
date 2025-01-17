@@ -1,3 +1,28 @@
 @import '/vendor/filament/filament/resources/css/theme.css';
 
 @config 'tailwind.config.js';
+
+@layer components {
+    .editor {
+        &,
+        .fi-fo-field-wrp,
+        .fi-fo-field-wrp > .grid {
+            @apply h-full;
+        }
+        .fi-input-wrp {
+            @apply !bg-gray-900 !ring-1 !ring-inset !ring-gray-700;
+            &:focus-within {
+                @apply !ring-primary-500;
+            }
+        }
+        .fi-input-wrp-input {
+            > div {
+                @apply flex flex-col h-full;
+                .fi-fo-rich-editor-editor {
+                    @apply grow p-4;
+                }
+            }
+        }
+        
+    }
+}
