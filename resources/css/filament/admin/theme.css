@@ -3,17 +3,23 @@
 @config 'tailwind.config.js';
 
 @layer components {
-    .editor {
-        &,
-        .fi-fo-field-wrp,
-        .fi-fo-field-wrp > .grid {
+    .lesson-step-editor {
+        @apply grid grid-cols-[1fr_1fr_1fr] grid-rows-[1fr_1fr_1fr];
+        @apply gap-5 pt-4 pb-5 px-8 *:min-w-0;
+        > * {
+            @apply min-w-0 min-h-0;
+            &:nth-child(1) {
+                @apply row-span-3;
+            }
+            &:nth-child(2) {
+                @apply row-span-2 col-span-2;
+            }
+        }
+        .fi-fo-field-wrp {
             @apply h-full;
         }
-        .fi-input-wrp {
-            @apply !bg-gray-900 !ring-1 !ring-inset !ring-gray-700;
-            &:focus-within {
-                @apply !ring-primary-500;
-            }
+        .fi-fo-field-wrp > .grid {
+            @apply h-full grid-rows-[auto_1fr];
         }
         .fi-input-wrp-input {
             > div {
@@ -23,6 +29,10 @@
                 }
             }
         }
-        
+        .code-mirror {
+            &, > * {
+                @apply h-full;
+            }
+        }
     }
 }

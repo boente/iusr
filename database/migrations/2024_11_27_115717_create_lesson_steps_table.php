@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('content')->nullable();
             $table->text('code')->nullable();
+            $table->text('solution')->nullable();
             $table->foreignId('lesson_id')->constrained()->onDelete('cascade');
             $table->integer('order')->default(0);
             $table->timestamps();

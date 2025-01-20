@@ -5,17 +5,19 @@ namespace App\Livewire;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class LessonEditor extends Component
 {
     public ?Model $record = null;
 
+    #[Url(as: 'step', keep: true, history: true)]
     public $stepNumber;
 
     public function mount()
     {
-        $this->stepNumber = $this->steps->count() ? 1 : null;
+        $this->stepNumber = $this->stepNumber ?? ($this->steps->count() ? 1 : null);
     }
 
     #[Computed]

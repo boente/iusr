@@ -3,10 +3,10 @@
 namespace App\Filament\Resources\LessonResource\Pages;
 
 use App\Filament\Resources\LessonResource;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Contracts\Support\Htmlable;
 
-class EditLesson extends EditRecord
+class EditLesson extends ViewRecord
 {
     protected static string $resource = LessonResource::class;
 

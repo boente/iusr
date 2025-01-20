@@ -13,6 +13,10 @@ class Judge0 extends Executor
     {
         $key = md5($code.$language);
 
+        if (Cache::has($key)) {
+            sleep(1);
+        }
+
         $response = Cache::remember($key, 60 * 60, function () use ($code, $language) {
             return self::runSubmission($code, $language);
         });

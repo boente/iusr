@@ -32,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('16rem')
             ->viteTheme([
                 'resources/css/filament/admin/theme.css',
                 'resources/css/filament/admin/theme.js',

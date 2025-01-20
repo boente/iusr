@@ -3,12 +3,15 @@
 namespace App\Livewire;
 
 use App\Executors\Judge0;
+use App\Filament\Forms\Components\CodeMirror;
 use Filament\Forms\Components;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -18,23 +21,35 @@ class LessonStepEditor extends Component implements HasForms
 
     public ?Model $record = null;
 
-    public ?string $code = null;
-
-    public ?array $result = null;
-
     public ?array $data = [];
+
+    public ?bool $correct = false;
 
     public function mount()
     {
-        $this->code = $this->record->code;
-        $this->form->fill([
-            'content' => $this->record->content,
-        ]);
+        $this->form->fill($this->record->only([
+            'content',
+            'code',
+            'solution',
+        ]));
     }
 
     public function execute()
     {
-        $this->result = Judge0::execute($this->code, $this->record->language_id);
+        $this->data['output'] = Judge0::execute($this->data['code'], $this->record->language_id);
+        $this->check();
+    }
+
+    public function check()
+    {
+        $output = $this->data['output']['output'] ?? null;
+        $solution = $this->data['solution'];
+        $this->correct = Str::contains($output, $solution);
+    }
+
+    public function copy()
+    {
+        $this->data['solution'] = $this->data['output']['output'] ?? null;
     }
 
     public function form(Form $form): Form
@@ -42,7 +57,6 @@ class LessonStepEditor extends Component implements HasForms
         return $form
             ->schema([
                 Components\RichEditor::make('content')
-                    ->hiddenLabel()
                     ->toolbarButtons([
                         'h2',
                         'h3',
@@ -54,18 +68,20 @@ class LessonStepEditor extends Component implements HasForms
                         'bulletList',
                         'orderedList',
                     ]),
+                CodeMirror::make('code'),
+                Components\ViewField::make('output')
+                    ->view('filament.components.code-output'),
+                Components\Textarea::make('solution')
+                    ->extraInputAttributes(['class' => 'text-sm font-mono !leading-5 !p-4']),
             ])
-            ->view('components.layout.editor')
+            ->view('filament.components.layout.plain')
             ->statePath('data');
     }
 
     #[On('save')]
     public function save()
     {
-        $this->record->update([
-            ...$this->data,
-            'code' => $this->code,
-        ]);
+        $this->record->update(Arr::except($this->data, ['output']));
 
         Notification::make()
             ->title('Step saved successfully')

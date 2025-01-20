@@ -6,6 +6,7 @@ use App\Filament\Forms\Components\CourseStructure;
 use App\Filament\Resources\CourseResource\Pages;
 use App\Models\Course;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,20 +24,32 @@ class CourseResource extends Resource
             ->schema([
                 CourseStructure::make()
                     ->hidden(fn (string $operation) => $operation !== 'edit-structure'),
-                Forms\Components\TextInput::make('title')
+                Section::make()
                     ->hidden(fn (string $operation) => $operation === 'edit-structure')
-                    ->required(),
-                Forms\Components\Textarea::make('description')
-                    ->hidden(fn (string $operation) => $operation === 'edit-structure')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('skill_level')
-                    ->hidden(fn (string $operation) => $operation === 'edit-structure')
-                    ->required(),
-                Forms\Components\Select::make('language_id')
-                    ->hidden(fn (string $operation) => $operation === 'edit-structure')
-                    ->relationship('language', 'name')
-                    ->required(),
+                    ->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->required()
+                            ->columnSpanFull(),
+                        Forms\Components\RichEditor::make('description')
+                            ->required()
+                            ->columnSpanFull(),
+                        Forms\Components\Select::make('skill_level')
+                            ->options([
+                                'beginner' => 'Beginner',
+                                'intermediate' => 'Intermediate',
+                                'advanced' => 'Advanced',
+                            ])
+                            ->required(),
+                        Forms\Components\Select::make('language_id')
+                            ->relationship('language', 'name')
+                            ->required(),
+                        Forms\Components\Select::make('topics')
+                            ->relationship('topics', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->multiple(),
+                    ])
+                    ->columns(2),
             ])
             ->columns(1);
     }
