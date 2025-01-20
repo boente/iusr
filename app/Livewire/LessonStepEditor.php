@@ -42,9 +42,9 @@ class LessonStepEditor extends Component implements HasForms
 
     public function check()
     {
-        $output = $this->data['output']['output'] ?? null;
+        $code = $this->data['code'];
         $solution = $this->data['solution'];
-        $this->correct = Str::contains($output, $solution);
+        $this->correct = Str::contains($code, $solution);
     }
 
     public function copy()
@@ -69,10 +69,10 @@ class LessonStepEditor extends Component implements HasForms
                         'orderedList',
                     ]),
                 CodeMirror::make('code'),
+                CodeMirror::make('solution')
+                    ->extraInputAttributes(['class' => 'text-sm font-mono !leading-5 !p-4']),
                 Components\ViewField::make('output')
                     ->view('filament.components.code-output'),
-                Components\Textarea::make('solution')
-                    ->extraInputAttributes(['class' => 'text-sm font-mono !leading-5 !p-4']),
             ])
             ->view('filament.components.layout.plain')
             ->statePath('data');

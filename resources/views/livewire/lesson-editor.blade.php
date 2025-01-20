@@ -52,13 +52,6 @@
             @if ($this->steps->count())
                 <div class="flex gap-4">
                     <x-filament::button
-                        wire:click="addStep"
-                        class="mr-auto"
-                        color="gray"
-                        icon="heroicon-s-plus">
-                        Add step
-                    </x-filament::button>
-                    <x-filament::button
                         wire:click="previousStep"
                         :disabled="$this->step->number === 1"
                         icon="heroicon-s-chevron-left"
@@ -71,6 +64,13 @@
                         :disabled="$this->step->number === $this->steps->count()"
                         color="gray">
                         Next step
+                    </x-filament::button>
+                    <x-filament::button
+                        wire:click="addStep"
+                        class="ml-auto"
+                        color="gray"
+                        icon="heroicon-s-plus">
+                        Add step
                     </x-filament::button>
                 </div>
             @endif
