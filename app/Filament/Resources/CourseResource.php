@@ -16,7 +16,7 @@ class CourseResource extends Resource
 {
     protected static ?string $model = Course::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
     public static function form(Form $form): Form
     {
@@ -33,12 +33,8 @@ class CourseResource extends Resource
                         Forms\Components\RichEditor::make('description')
                             ->required()
                             ->columnSpanFull(),
-                        Forms\Components\Select::make('skill_level')
-                            ->options([
-                                'beginner' => 'Beginner',
-                                'intermediate' => 'Intermediate',
-                                'advanced' => 'Advanced',
-                            ])
+                        Forms\Components\Select::make('level_id')
+                            ->relationship('level', 'name')
                             ->required(),
                         Forms\Components\Select::make('language_id')
                             ->relationship('language', 'name')

@@ -7,7 +7,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "calebporzio/sushi": "^2.5",
         "dutchcodingcompany/filament-developer-logins": "^1.5",
         "filament/filament": "^3.2",
         "laravel/framework": "^11.31",

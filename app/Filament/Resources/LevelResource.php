@@ -2,26 +2,25 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TopicResource\Pages;
-use App\Models\Topic;
+use App\Filament\Resources\LevelResource\Pages;
+use App\Models\Level;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class TopicResource extends Resource
+class LevelResource extends Resource
 {
-    protected static ?string $model = Topic::class;
+    protected static ?string $model = Level::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationIcon = 'heroicon-o-bookmark';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required(),
+                Forms\Components\TextInput::make('name'),
             ]);
     }
 
@@ -31,14 +30,6 @@ class TopicResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -57,7 +48,7 @@ class TopicResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageTopics::route('/'),
+            'index' => Pages\ManageLevels::route('/'),
         ];
     }
 }

@@ -16,6 +16,11 @@ class Course extends Model
         return $this->belongsTo(Language::class);
     }
 
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+
     public function chapters()
     {
         return $this->hasMany(Chapter::class);
