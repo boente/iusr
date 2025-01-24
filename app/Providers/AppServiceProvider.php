@@ -2,12 +2,23 @@
 
 namespace App\Providers;
 
+use App\Executors\Executor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    public function register()
+    {
+        $this->app->singleton('executor', function (): Executor {
+            $config = config('code.executors.'.config('code.executor'));
+            $class = $config['class'];
+
+            return new $class($config);
+        });
+    }
+
     public function boot(): void
     {
         Model::shouldBeStrict();

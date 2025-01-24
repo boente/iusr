@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Facades\Executor;
 use App\Filament\Resources\LanguageResource\Pages;
 use App\Models\Language;
 use Filament\Forms;
@@ -20,8 +21,11 @@ class LanguageResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\TextInput::make('handle'),
+                Forms\Components\TextInput::make('name')
+                    ->columnSpan(2),
+                Forms\Components\Select::make('editor_language')
+                    ->options(config('code.editor_languages')),
+                ...Executor::fields(),
             ]);
     }
 

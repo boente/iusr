@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Executors\Judge0;
+use App\Facades\Executor;
 use App\Filament\Forms\Components\CodeMirror;
 use Filament\Forms\Components;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -36,7 +36,7 @@ class LessonStepEditor extends Component implements HasForms
 
     public function execute()
     {
-        $this->data['output'] = Judge0::execute($this->data['code'], $this->record->language_id);
+        $this->data['output'] = Executor::execute($this->data['code'], $this->record->language);
         $this->check();
     }
 

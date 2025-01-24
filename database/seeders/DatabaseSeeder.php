@@ -23,24 +23,30 @@ class DatabaseSeeder extends Seeder
 
         $languages = [
             [
-                'handle' => 'php',
                 'name' => 'PHP',
+                'editor_language' => 'php',
+                'data' => [
+                    'judge0_id' => 98,
+                ],
             ],
             [
-                'handle' => 'javascript',
                 'name' => 'JavaScript',
+                'editor_language' => 'javascript',
+                'data' => [
+                    'judge0_id' => 102,
+                ],
             ],
             [
-                'handle' => 'r',
                 'name' => 'R',
+                'editor_language' => 'r',
+                'data' => [
+                    'judge0_id' => 99,
+                ],
             ],
         ];
 
         foreach ($languages as $language) {
-            Language::create([
-                'handle' => $language['handle'],
-                'name' => $language['name'],
-            ]);
+            Language::create($language);
         }
 
         $levels = [
@@ -56,9 +62,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($levels as $level) {
-            Level::create([
-                'name' => $level['name'],
-            ]);
+            Level::create($level);
         }
     }
 }

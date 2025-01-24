@@ -2,11 +2,14 @@
 
 namespace App\Executors;
 
-use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Http;
+use App\Models\Language;
 
 abstract class Executor
 {
-    abstract public static function execute(string $code, string $language): array;
+    abstract public function execute(string $code, Language $language): array;
+
+    public function fields(): array
+    {
+        return [];
+    }
 }

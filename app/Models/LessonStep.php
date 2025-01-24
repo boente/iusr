@@ -11,9 +11,9 @@ class LessonStep extends Model
         return $this->belongsTo(Lesson::class);
     }
 
-    public function getLanguageIdAttribute()
+    public function getLanguageAttribute()
     {
-        return $this->lesson->chapter->course->language_id;
+        return $this->lesson->chapter->course->language;
     }
 
     public function getNumberAttribute()

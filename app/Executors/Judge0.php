@@ -2,14 +2,35 @@
 
 namespace App\Executors;
 
+use App\Models\Language;
+use Filament\Forms;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use InvalidArgumentException;
 
 class Judge0 extends Executor
 {
-    public static function execute(string $code, string $language): array
+    protected array $config;
+
+    public function __construct(array $config)
+    {
+        $this->config = [
+            ...$config,
+            'endpoint' => 'https://'.$config['host'],
+        ];
+    }
+
+    public function fields(): array
+    {
+        return [
+            Forms\Components\Select::make('data.judge0_id')
+                ->label('Judge0 language')
+                ->options(collect($this->getLanguages())->pluck('name', 'id'))
+                ->required(),
+        ];
+    }
+
+    public function execute(string $code, Language $language): array
     {
         $key = md5($code.$language);
 
@@ -17,8 +38,8 @@ class Judge0 extends Executor
             sleep(1);
         }
 
-        $response = Cache::remember($key, 60 * 60, function () use ($code, $language) {
-            return self::runSubmission($code, $language);
+        $response = Cache::remember('judge0-'.$key, 60 * 60, function () use ($code, $language) {
+            return $this->runSubmission($code, $language);
         });
 
         return [
@@ -27,30 +48,26 @@ class Judge0 extends Executor
         ];
     }
 
-    public static function runSubmission(string $code, string $language): array
+    public function runSubmission(string $code, Language $language): array
     {
-        $response = self::createSubmission($code, $language);
+        $response = $this->createSubmission($code, $language);
 
         $token = $response['token'];
 
         do {
             usleep(2.5 * 1000000);
-            $response = self::fetchSubmission($token);
+            $response = $this->fetchSubmission($token);
         } while ($response['status']['id'] < 3);
 
         return $response;
     }
 
-    public static function createSubmission(string $code, string $language): array
+    public function createSubmission(string $code, Language $language): array
     {
-        $languageId = match ($language) {
-            'javascript' => 63,
-            'r' => 80,
-            default => throw new InvalidArgumentException("Unsupported language: {$language}"),
-        };
+        $languageId = $language->data['judge0_id'];
 
-        $response = self::makeRequest()
-            ->post('https://judge0-ce.p.rapidapi.com/submissions', [
+        $response = $this->makeRequest()
+            ->post($this->config['endpoint'].'/submissions', [
                 'source_code' => $code,
                 'language_id' => $languageId,
             ]);
@@ -58,22 +75,31 @@ class Judge0 extends Executor
         return $response->json();
     }
 
-    public static function fetchSubmission(string $token): array
+    public function fetchSubmission(string $token): array
     {
-        $response = self::makeRequest()
-            ->get("https://judge0-ce.p.rapidapi.com/submissions/{$token}");
+        $response = $this->makeRequest()
+            ->get($this->config['endpoint'].'/submissions/'.$token);
 
         return $response->json();
     }
 
-    protected static function makeRequest(): PendingRequest
+    public function getLanguages(): array
+    {
+        return Cache::rememberForever('judge0-languages', function () {
+            $response = $this->makeRequest()->get($this->config['endpoint'].'/languages');
+
+            return $response->json();
+        });
+    }
+
+    protected function makeRequest(): PendingRequest
     {
         return Http::createPendingRequest()
             ->throw()
             ->withHeaders([
                 'Content-Type' => 'application/json',
-                'x-rapidapi-host' => 'judge0-ce.p.rapidapi.com',
-                'x-rapidapi-key' => '7c9db85545msh9f5f296775a9affp195290jsne84d67476563',
+                'x-rapidapi-host' => $this->config['host'],
+                'x-rapidapi-key' => $this->config['api_key'],
             ]);
     }
 }
