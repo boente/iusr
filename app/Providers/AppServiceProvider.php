@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Checkers\Checker;
 use App\Executors\Executor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,13 @@ class AppServiceProvider extends ServiceProvider
             $class = $config['class'];
 
             return new $class($config);
+        });
+
+        $this->app->singleton('checker', function (): Checker {
+            $config = config('code.checker');
+            $class = $config['class'];
+
+            return new $class;
         });
     }
 

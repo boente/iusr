@@ -19,11 +19,4 @@
         icon="heroicon-s-check"
         color="gray">
     </x-filament::icon-button>
-    <x-filament::icon-button
-        class="!absolute top-1/2 -translate-y-1/2 mt-3 -right-0.5 bg-gray-950 ring-1 ring-gray-950/10 dark:ring-white/20"
-        icon="heroicon-s-chevron-right"
-        color="gray"
-        tooltip="Copy to solution"
-        wire:click="copy">
-    </x-filament::icon-button>
 </x-dynamic-component>

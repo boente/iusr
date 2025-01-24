@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Facades\Checker;
 use App\Facades\Executor;
 use App\Filament\Forms\Components\CodeMirror;
 use Filament\Forms\Components;
@@ -11,7 +12,6 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -34,22 +34,28 @@ class LessonStepEditor extends Component implements HasForms
         ]));
     }
 
-    public function execute()
+    public function execute($name)
     {
-        $this->data['output'] = Executor::execute($this->data['code'], $this->record->language);
+        if (! in_array($name, ['code', 'solution'])) {
+            abort(400);
+        }
+
+        $value = $this->data[$name];
+        if (! $value) {
+            return;
+        }
+
+        $this->data['output'] = Executor::execute($value, $this->record->language);
         $this->check();
     }
 
     public function check()
     {
-        $code = $this->data['code'];
-        $solution = $this->data['solution'];
-        $this->correct = Str::contains($code, $solution);
-    }
+        if (! $this->data['code']) {
+            return;
+        }
 
-    public function copy()
-    {
-        $this->data['solution'] = $this->data['output']['output'] ?? null;
+        $this->correct = Checker::check($this->data['code'], $this->data['solution']);
     }
 
     public function form(Form $form): Form
@@ -68,8 +74,12 @@ class LessonStepEditor extends Component implements HasForms
                         'bulletList',
                         'orderedList',
                     ]),
-                CodeMirror::make('code'),
+                CodeMirror::make('code')
+                    ->executable()
+                    ->language($this->record->language->editor_language),
                 CodeMirror::make('solution')
+                    ->executable()
+                    ->language($this->record->language->editor_language)
                     ->extraInputAttributes(['class' => 'text-sm font-mono !leading-5 !p-4']),
                 Components\ViewField::make('output')
                     ->view('filament.components.code-output'),

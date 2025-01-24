@@ -1,6 +1,9 @@
 @php
     $statePath = $getStatePath();
     $state = $getState();
+    $name = $getName();
+    $isExecutable = $isExecutable();
+    $language = $getLanguage();
 @endphp
 
 <x-dynamic-component :component="$getFieldWrapperView()" :field="$field" class="relative">
@@ -8,6 +11,7 @@
         wire:ignore
         x-data="codemirror(@js([
             'value' => $state,
+            'language' => $language,
         ]))"
         x-on:input="$wire.set('{{ $statePath }}', $event.detail, false)"
         @class([
@@ -20,10 +24,12 @@
             '[&_.cm-focused]:outline-none',
         ])> 
     </div>
-    <x-filament::button
-        class="!absolute bottom-6 right-6 text-xl"
-        icon="heroicon-s-play"
-        wire:click="execute">
-        Run
-    </x-filament::button>
+    @if ($isExecutable)
+        <x-filament::button
+            class="!absolute bottom-6 right-6 text-xl"
+            icon="heroicon-s-play"
+            wire:click="execute('{{ $name }}')">
+            Run
+        </x-filament::button>
+    @endif
 </x-dynamic-component>
