@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Facades\Executor;
+use App\Facades\Code;
 use App\Filament\Resources\LanguageResource\Pages;
 use App\Models\Language;
 use Filament\Forms;
@@ -25,7 +25,7 @@ class LanguageResource extends Resource
                     ->columnSpan(2),
                 Forms\Components\Select::make('editor_language')
                     ->options(config('code.editor_languages')),
-                ...Executor::fields(),
+                ...Code::executor()->fields(),
             ]);
     }
 

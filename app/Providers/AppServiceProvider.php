@@ -12,18 +12,18 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton('executor', function (): Executor {
+        $this->app->singleton('code.executor', function (): Executor {
             $config = config('code.executors.'.config('code.executor'));
             $class = $config['class'];
 
             return new $class($config);
         });
 
-        $this->app->singleton('checker', function (): Checker {
-            $config = config('code.checker');
+        $this->app->singleton('code.checker', function (): Checker {
+            $config = config('code.checkers.'.config('code.checker'));
             $class = $config['class'];
 
-            return new $class;
+            return new $class($config);
         });
     }
 

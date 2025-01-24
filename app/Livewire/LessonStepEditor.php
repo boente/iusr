@@ -2,8 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Facades\Checker;
-use App\Facades\Executor;
+use App\Facades\Code;
 use App\Filament\Forms\Components\CodeMirror;
 use Filament\Forms\Components;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -45,7 +44,8 @@ class LessonStepEditor extends Component implements HasForms
             return;
         }
 
-        $this->data['output'] = Executor::execute($value, $this->record->language);
+        $this->data['output'] = Code::executor()
+            ->execute($value, $this->record->language);
         $this->check();
     }
 
@@ -55,7 +55,8 @@ class LessonStepEditor extends Component implements HasForms
             return;
         }
 
-        $this->correct = Checker::check($this->data['code'], $this->data['solution']);
+        $this->correct = Code::checker()
+            ->check($this->data['code'], $this->data['solution']);
     }
 
     public function form(Form $form): Form
