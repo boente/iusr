@@ -15,4 +15,9 @@ class Chapter extends Model
     {
         return $this->hasMany(Lesson::class);
     }
+
+    public function getTimeToCompleteAttribute()
+    {
+        return $this->lessons->sum('time_to_complete');
+    }
 }

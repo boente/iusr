@@ -2,19 +2,9 @@ import { EditorState } from '@codemirror/state';
 import { indentWithTab, history, defaultKeymap, historyKeymap } from '@codemirror/commands';
 import { indentOnInput, indentUnit, bracketMatching, syntaxHighlighting, defaultHighlightStyle } from '@codemirror/language';
 import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
-import { highlightActiveLine, keymap, EditorView } from '@codemirror/view';
-
+import { highlightActiveLine, keymap, EditorView, lineNumbers } from '@codemirror/view';
 import { oneDark } from "@codemirror/theme-one-dark";
-
-import { php } from "@codemirror/lang-php";
-import { javascript } from "@codemirror/lang-javascript";
-import { r } from "codemirror-lang-r";
-
-const languages = {
-    php,
-    javascript,
-    r,
-};
+import languages from '../editor-languages';
 
 Alpine.data('codemirror', (data) => ({
     ...data,
@@ -25,6 +15,7 @@ Alpine.data('codemirror', (data) => ({
                 doc: this.value,
                 extensions: [
                     history(),
+                    lineNumbers(),
                     indentUnit.of("    "),
                     indentOnInput(),
                     bracketMatching(),

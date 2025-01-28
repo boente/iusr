@@ -34,8 +34,8 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->sidebarWidth('12rem')
             ->viteTheme([
-                'resources/css/filament/admin/theme.css',
-                'resources/css/filament/admin/theme.js',
+                'resources/css/app.css',
+                'resources/js/app.js',
             ])
             ->colors([
                 'primary' => Color::Cyan,
@@ -49,7 +49,6 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

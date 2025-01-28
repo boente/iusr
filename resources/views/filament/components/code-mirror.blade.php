@@ -22,6 +22,7 @@
             '[&_.cm-content]:border-0 [&_.cm-content]:pt-4 [&_.cm-content]:pb-20 [&_.cm-content]:px-3',
             '[&_.cm-editor]:bg-transparent',
             '[&_.cm-focused]:outline-none',
+            '[&_.cm-gutters]:rounded-l-lg [&_.cm-gutters]:bg-gray-950/5 [&_.cm-gutters]:dark:bg-white/5',
         ])> 
     </div>
     @if ($isExecutable)

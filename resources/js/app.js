@@ -1,1 +1,1 @@
-import './bootstrap';
+import './components/code-mirror';

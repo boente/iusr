@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('comparison_method')->default('exact');
             $table->string('type')->default('theory');
-            $table->integer('time_to_complete')->default(0);
+            $table->integer('time_to_complete')->nullable();
             $table->foreignId('chapter_id')->constrained()->onDelete('cascade');
             $table->integer('order')->default(0);
             $table->timestamps();

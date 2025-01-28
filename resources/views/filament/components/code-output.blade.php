@@ -1,5 +1,6 @@
 @php
-    $state = $getState();
+    $output = $getLivewire()->output;
+    $error = $getLivewire()->error;
     $correct = $getLivewire()->correct;
 @endphp
 
@@ -8,8 +9,8 @@
         'p-4 pb-20 text-sm font-mono leading-5 ring-1 ring-gray-950/10 dark:ring-white/20 rounded-lg overflow-auto transition',
         '!ring-success-500' => $correct,
     ])>
-        <pre>{{ $state['output'] ?? null }}</pre>
-        <pre class="text-red-600">{{ $state['error'] ?? null }}</pre>
+        <pre>{{ $output }}</pre>
+        <pre class="text-red-600">{{ $error }}</pre>
     </div>
     <x-filament::icon-button
         :class="Arr::toCssClasses([

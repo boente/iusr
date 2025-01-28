@@ -116,8 +116,7 @@ class CourseStructure
         return [
             Forms\Components\TextInput::make('title')
                 ->required(),
-            Forms\Components\TextInput::make('time_to_complete')
-                ->required(),
+            Forms\Components\TextInput::make('time_to_complete'),
         ];
     }
 

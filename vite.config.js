@@ -5,8 +5,8 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/css/filament/admin/theme.css',
-                'resources/css/filament/admin/theme.js',
+                'resources/css/app.css',
+                'resources/js/app.js',
             ],
             refresh: true,
         }),

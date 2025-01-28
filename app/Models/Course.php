@@ -30,4 +30,9 @@ class Course extends Model
     {
         return $this->hasManyThrough(Lesson::class, Chapter::class);
     }
+
+    public function getTimeToCompleteAttribute()
+    {
+        return $this->lessons->sum('time_to_complete');
+    }
 }
