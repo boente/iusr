@@ -57,8 +57,10 @@ class CourseResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('skill_level')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('language.name'),
+                Tables\Columns\TextColumn::make('level.name'),
+                Tables\Columns\TextColumn::make('topics.name')
+                    ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

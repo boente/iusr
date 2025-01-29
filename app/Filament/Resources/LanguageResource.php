@@ -17,6 +17,8 @@ class LanguageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-code-bracket';
 
+    protected static ?string $navigationGroup = 'Settings';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -34,8 +36,6 @@ class LanguageResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('handle')
                     ->searchable(),
             ])
             ->filters([

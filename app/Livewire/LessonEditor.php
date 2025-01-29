@@ -34,6 +34,8 @@ class LessonEditor extends Component
 
     public function addStep()
     {
+        $this->authorize('create', LessonStep::class);
+
         unset($this->steps);
         unset($this->step);
 

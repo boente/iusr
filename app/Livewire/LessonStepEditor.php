@@ -10,6 +10,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -54,7 +55,7 @@ class LessonStepEditor extends Component implements HasForms
 
     public function check()
     {
-        if (! $this->data['code']) {
+        if (! $this->data['code'] || ! $this->data['solution']) {
             return;
         }
 
@@ -95,7 +96,9 @@ class LessonStepEditor extends Component implements HasForms
     #[On('save')]
     public function save()
     {
-        $this->record->update($this->data);
+        $this->authorize('update', $this->record);
+
+        $this->record->update(Arr::except($this->data, 'output'));
 
         Notification::make()
             ->title('Step saved successfully')
