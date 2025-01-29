@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        $admin = User::create([
             'name' => 'Jack Sleight',
             'email' => 'hi@jacksleight.com',
             'username' => 'jacksleight',
@@ -52,17 +52,24 @@ class DatabaseSeeder extends Seeder
         $levels = [
             [
                 'name' => 'Beginner',
+                'order' => 1,
             ],
             [
                 'name' => 'Intermediate',
+                'order' => 2,
             ],
             [
                 'name' => 'Advanced',
+                'order' => 3,
             ],
         ];
 
         foreach ($levels as $level) {
             Level::create($level);
         }
+
+        $this->call(ShieldSeeder::class);
+
+        $admin->assignRole('Super Admin');
     }
 }

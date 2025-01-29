@@ -53,25 +53,30 @@ class CourseResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('title')
             ->recordUrl(fn ($record) => route('filament.admin.resources.courses.view', $record))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('language.name'),
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('language.name')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('level.name'),
                 Tables\Columns\TextColumn::make('topics.name')
                     ->badge(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('language_id')
+                    ->relationship('language', 'name')
+                    ->label('Language'),
+                Tables\Filters\SelectFilter::make('level_id')
+                    ->relationship('level', 'name')
+                    ->label('Level'),
+                Tables\Filters\SelectFilter::make('topics')
+                    ->relationship('topics', 'name')
+                    ->label('Topics')
+                    ->preload()
+                    ->multiple(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

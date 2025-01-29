@@ -40,7 +40,7 @@ return [
             // 'restore',
             // 'restore_any',
             // 'replicate',
-            // 'reorder',
+            'reorder',
             'delete',
             'delete_any',
             // 'force_delete',
