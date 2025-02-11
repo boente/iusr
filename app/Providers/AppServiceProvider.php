@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Checkers\Checker;
 use App\Executors\Executor;
+use BezhanSalleh\PanelSwitch\PanelSwitch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -29,8 +30,17 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Model::shouldBeStrict();
+        Model::shouldBeStrict(app()->isLocal());
         Model::unguard();
+
+        PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
+            return $panelSwitch
+                ->simple()
+                ->labels([
+                    'app' => __('Frontend'),
+                    'admin' => __('Admin'),
+                ]);
+        });
 
         $this->bootSqliteOptimize();
     }
