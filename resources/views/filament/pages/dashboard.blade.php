@@ -2,11 +2,11 @@
 use App\Filament\Pages\Course;
 @endphp
 
-<x-filament-panels::page>
+<x-filament-panels::page class="py-8">
     <div class="grid grid-cols-3 gap-6">
         @foreach ($courses as $course)
             <a href="{{ Course::getUrl(['course' => $course]) }}"
-                class="rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10 p-6 prose dark:prose-invert hover:dark:ring-primary-500">
+                class="rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10 p-6 prose dark:prose-invert hover:dark:ring-primary-500 transition">
                 <h2 class="mb-2">
                     {{ $course->title }}
                 </h2>
