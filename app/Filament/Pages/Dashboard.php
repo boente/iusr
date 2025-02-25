@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\Course;
 use Filament\Pages\Page;
 
 class Dashboard extends Page
@@ -13,4 +14,11 @@ class Dashboard extends Page
     protected static string $view = 'filament.pages.dashboard';
 
     protected static ?string $slug = '/';
+
+    protected function getViewData(): array
+    {
+        return [
+            'courses' => Course::all(),
+        ];
+    }
 }
