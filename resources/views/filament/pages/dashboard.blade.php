@@ -1,7 +1,11 @@
+@php
+use App\Filament\Pages\Course;
+@endphp
+
 <x-filament-panels::page>
-    <div class="grid grid-cols-3 gap-8">
+    <div class="grid grid-cols-3 gap-6">
         @foreach ($courses as $course)
-            <a href="1"
+            <a href="{{ Course::getUrl(['course' => $course]) }}"
                 class="rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10 p-6 prose dark:prose-invert hover:dark:ring-primary-500">
                 <h2 class="mb-2">
                     {{ $course->title }}
@@ -22,7 +26,7 @@
                     @if ($course->time_to_complete)
                         <div class="flex gap-1.5 items-center">
                             <x-heroicon-o-clock class="size-5 text-white" />
-                            {{ $course->time_to_complete }}
+                            {{ $course->time_to_complete }} hours
                         </div>
                     @endif
                 </div>
