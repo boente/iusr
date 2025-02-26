@@ -2,35 +2,35 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Course as CourseModel;
+use App\Models\Lesson as LessonModel;
 use Filament\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Locked;
 
-class Course extends Page
+class Lesson extends Page
 {
     #[Locked]
-    public CourseModel $course;
+    public LessonModel $lesson;
 
-    protected static string $view = 'filament.pages.course';
+    protected static string $view = 'filament.pages.lesson';
 
-    protected static ?string $slug = 'courses/{course}';
+    protected static ?string $slug = 'courses/{course}/lessons/{lesson}';
 
     protected static bool $shouldRegisterNavigation = false;
 
     public function getTitle(): string|Htmlable
     {
-        return $this->course->title;
+        return $this->lesson->title;
     }
 
     public function getSubheading(): string|Htmlable|null
     {
-        return strip_tags($this->course->description);
+        return strip_tags($this->lesson->description);
     }
 
     public function mountCanAuthorizeAccess(): void
     {
-        Gate::authorize('view', $this->course);
+        Gate::authorize('view', $this->lesson);
     }
 }
