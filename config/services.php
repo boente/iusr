@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'eduid' => [
+        'client_id' => env('EDUID_CLIENT_ID'),
+        'client_secret' => env('EDUID_CLIENT_SECRET'),
+        'redirect' => env('EDUID_REDIRECT_URI'),
+        'use_test_idp' => false,
+    ],
+
 ];

@@ -3,6 +3,8 @@
 namespace App\Providers\Filament;
 
 use DutchCodingCompany\FilamentDeveloperLogins\FilamentDeveloperLoginsPlugin;
+use DutchCodingCompany\FilamentSocialite\FilamentSocialitePlugin;
+use DutchCodingCompany\FilamentSocialite\Provider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -56,6 +58,11 @@ class AppPanelProvider extends PanelProvider
                     ->users([
                         'Jack' => 'hi@jacksleight.com',
                     ]),
+                FilamentSocialitePlugin::make()
+                    ->providers([
+                        Provider::make('eduid')->label('EduID'),
+                    ])
+                    ->registration(true),
             ]);
     }
 }
