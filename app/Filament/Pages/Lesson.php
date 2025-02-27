@@ -13,6 +13,8 @@ class Lesson extends Page
     #[Locked]
     public LessonModel $lesson;
 
+    protected static string $layout = 'components.layout.blank';
+
     protected static string $view = 'filament.pages.lesson';
 
     protected static ?string $slug = 'courses/{course}/lessons/{lesson}';

@@ -1,3 +1,3 @@
-<x-filament-panels::page class="py-8">
-    
-</x-filament-panels::page>
+<div>
+    <livewire:lesson-viewer :record="$lesson" />
+</div>

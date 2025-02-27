@@ -2,8 +2,8 @@
 
 namespace App\Livewire;
 
-use App\Facades\Code;
 use App\Filament\Forms\Components\CodeMirror;
+use App\Livewire\Concerns\ExecutesCode;
 use Filament\Forms\Components;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -16,17 +16,12 @@ use Livewire\Component;
 
 class LessonStepEditor extends Component implements HasForms
 {
+    use ExecutesCode;
     use InteractsWithForms;
 
     public ?Model $record = null;
 
     public ?array $data = [];
-
-    public ?string $output = null;
-
-    public ?string $error = null;
-
-    public ?bool $correct = false;
 
     public function mount()
     {
@@ -35,32 +30,6 @@ class LessonStepEditor extends Component implements HasForms
             'code',
             'solution',
         ]));
-    }
-
-    public function execute($name)
-    {
-        if (! in_array($name, ['code', 'solution'])) {
-            abort(400);
-        }
-
-        $value = $this->data[$name];
-        if (! $value) {
-            return;
-        }
-
-        $this->fill(Code::executor()->execute($value, $this->record->language));
-
-        $this->check();
-    }
-
-    public function check()
-    {
-        if (! $this->data['code'] || ! $this->data['solution']) {
-            return;
-        }
-
-        $this->correct = Code::checker()
-            ->check($this->data['code'], $this->data['solution']);
     }
 
     public function form(Form $form): Form
