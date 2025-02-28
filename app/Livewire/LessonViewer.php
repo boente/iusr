@@ -35,14 +35,14 @@ class LessonViewer extends Component
     {
         unset($this->step);
 
-        $this->stepNumber = min($this->steps->count(), $this->stepNumber + 1);
+        $this->stepNumber = $this->stepNumber === $this->steps->count() ? 0 : $this->stepNumber + 1;
     }
 
     public function previousStep()
     {
         unset($this->step);
 
-        $this->stepNumber = max(0, $this->stepNumber - 1);
+        $this->stepNumber = max(1, $this->stepNumber - 1);
     }
 
     public function render()

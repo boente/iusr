@@ -21,29 +21,39 @@
                 </x-filament::button>
             </div>
         </div>
-        <div
-            class="transition"
-            wire:loading.class="opacity-50 pointer-events-none">
-                <livewire:lesson-step-viewer
-                    wire:id="lesson-step-viewer"
-                    :key="$this->step->id" 
-                    :record="$this->step" />
-        </div>
+        @if ($this->step)
+            <div
+                class="transition"
+                wire:loading.class="opacity-50 pointer-events-none">
+                    <livewire:lesson-step-viewer
+                        wire:id="lesson-step-viewer"
+                        :key="$this->step->id" 
+                        :record="$this->step" />
+            </div>
+        @elseif (!$this->steps->count())
+            <div class="p-4 m-auto">
+                This lesson has no steps.
+            </div>
+        @else
+            <div class="p-4 m-auto">
+                Lesson complete.
+            </div>
+        @endif
         <div class="px-8 py-3.5 border-t border-gray-800">
             @if ($this->steps->count())
                 <div class="flex gap-4">
                     <x-filament::button
                         wire:click="previousStep"
-                        :disabled="$this->step->number === 1"
+                        :disabled="!$this->step || $this->step->number === 1"
                         icon="heroicon-s-chevron-left"
                         color="gray">
                         Previous step
                     </x-filament::button>
                     <x-filament::button
                         wire:click="nextStep"
+                        :disabled="!$this->step"
                         class="ml-auto"
                         icon="heroicon-s-chevron-right" icon-position="after"
-                        :disabled="$this->step->number === $this->steps->count()"
                         color="gray">
                         Next step
                     </x-filament::button>
