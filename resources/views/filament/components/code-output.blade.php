@@ -6,11 +6,11 @@
 
 <x-dynamic-component :component="$getFieldWrapperView()" :field="$field" class="relative h-full">
     <div @class([
-        'p-4 pb-20 text-sm font-mono leading-5 ring-1 ring-gray-950/10 dark:ring-white/20 rounded-lg overflow-auto transition',
+        'p-4 text-sm font-mono leading-5 ring-1 ring-gray-950/10 dark:ring-white/20 rounded-lg overflow-auto transition',
         '!ring-success-500' => $correct,
     ])>
-        <pre>{{ $output }}</pre>
-        <pre class="text-red-600">{{ $error }}</pre>
+        <pre class="block">{{ $output }}</pre>
+        <pre class="block text-red-600">{{ $error }}</pre>
     </div>
     <x-filament::icon-button
         :class="Arr::toCssClasses([

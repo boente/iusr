@@ -9,6 +9,7 @@ class CodeMirror extends Textarea
     protected string $view = 'filament.components.code-mirror';
 
     protected string|Closure|null $language = null;
+    protected string|Closure|null $solution = null;
 
     protected bool|Closure $isExecutable = false;
 
@@ -19,9 +20,21 @@ class CodeMirror extends Textarea
         return $this;
     }
 
+    public function solution(string|Closure|null $solution): static
+    {
+        $this->solution = $solution;
+
+        return $this;
+    }
+
     public function getLanguage(): ?string
     {
         return $this->evaluate($this->language);
+    }
+
+    public function getSolution(): ?string
+    {
+        return $this->evaluate($this->solution);
     }
 
     public function executable(bool|Closure $condition = true): static

@@ -50,6 +50,7 @@ class LessonStepViewer extends Component implements HasForms
                     ]),
                 CodeMirror::make('code')
                     ->executable()
+                    ->solution($this->record->solution)
                     ->language($this->record->language->editor_language),
                 Components\ViewField::make('output')
                     ->view('filament.components.code-output'),

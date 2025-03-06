@@ -1,5 +1,5 @@
 <div class="fixed inset-0 bg-white z-50">
-    <div class="grid grid-rows-[auto_1fr_auto] h-screen bg-gray-950 text-white">
+    <div class="grid grid-rows-[auto_1fr_auto] *:min-h-0 h-screen bg-gray-950 text-white">
         <div class="px-8 py-3.5 flex justify-between items-center border-b border-gray-800 bg-gray-900">
             <div class="flex gap-2 items-center">
                 <span class="font-bold">{{ $record->chapter->course->title }}</span>

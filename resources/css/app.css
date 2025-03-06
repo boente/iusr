@@ -10,6 +10,9 @@
         }
         .fi-fo-field-wrp > .grid {
             @apply h-full grid-rows-[auto_1fr];
+            > * {
+                @apply min-h-0;
+            }
         }
         .fi-input-wrp-input {
             > div {
@@ -21,7 +24,7 @@
         }
         .code-mirror {
             &, > * {
-                @apply h-full;
+                @apply h-full min-h-0;
             }
         }
     }
