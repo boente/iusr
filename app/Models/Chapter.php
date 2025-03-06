@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Chapter extends Model
 {
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->order = static::max('order') + 1;
+        });
+    }
+
     public function course()
     {
         return $this->belongsTo(Course::class);
