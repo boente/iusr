@@ -12,20 +12,20 @@ use App\Filament\Pages\Course;
                 </h2>
                 <div class="text-sm flex gap-3">
                     <div class="flex gap-1.5 items-center">
-                        <x-heroicon-o-code-bracket class="size-5 text-white" />
+                        <x-heroicon-o-code-bracket class="size-5 dark:text-white" />
                         {{ $course->language->name }}
                     </div>
                     <div class="flex gap-1.5 items-center">
-                        <x-heroicon-o-tag class="size-5 text-white" />
+                        <x-heroicon-o-tag class="size-5 dark:text-white" />
                         {{ $course->topics->pluck('name')->join(',') }}
                     </div>
                     <div class="flex gap-1.5 items-center">
-                        <x-heroicon-o-academic-cap class="size-5 text-white" />
+                        <x-heroicon-o-academic-cap class="size-5 dark:text-white" />
                         {{ $course->level->name }}
                     </div>
                     @if ($course->time_to_complete)
                         <div class="flex gap-1.5 items-center">
-                            <x-heroicon-o-clock class="size-5 text-white" />
+                            <x-heroicon-o-clock class="size-5 dark:text-white" />
                             {{ $course->time_to_complete }} hours
                         </div>
                     @endif

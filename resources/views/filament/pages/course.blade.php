@@ -29,7 +29,7 @@ $chapters = $course
                                 </div>
                             @else
                                 <div class="flex gap-1.5 items-center">
-                                    <x-heroicon-o-clock class="size-5 text-white" />
+                                    <x-heroicon-o-clock class="size-5 dark:text-white" />
                                     {{ $lesson->time_to_complete ?? 0 }} minutes
                                 </div>
                             @endif

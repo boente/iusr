@@ -6,6 +6,8 @@ import { highlightActiveLine, keymap, EditorView, lineNumbers } from '@codemirro
 import { oneDark } from "@codemirror/theme-one-dark";
 import languages from '../editor-languages';
 
+const darkMode = document.documentElement.classList.contains('dark');
+
 Alpine.data('codemirror', (data) => ({
     ...data,
     editor: null,
@@ -29,7 +31,7 @@ Alpine.data('codemirror', (data) => ({
                     ]),
                     languages[this.language] ? languages[this.language]() : null,
                     syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
-                    oneDark,
+                    ...(darkMode ? [oneDark] : []),
                     EditorView.updateListener.of((update) => {
                         if (update.docChanged) {
                             this.$dispatch('input', this.editor.state.doc.toString());
