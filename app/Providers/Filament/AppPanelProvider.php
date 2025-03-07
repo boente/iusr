@@ -54,7 +54,7 @@ class AppPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentDeveloperLoginsPlugin::make()
-                    ->enabled()
+                ->enabled(app()->isProduction())
                     ->users([
                         'Jack' => 'hi@jacksleight.com',
                     ]),
