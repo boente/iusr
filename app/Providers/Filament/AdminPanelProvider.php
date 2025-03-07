@@ -65,7 +65,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentDeveloperLoginsPlugin::make()
-                    ->enabled(app()->isProduction())
+                    ->enabled(app()->isLocal())
                     ->users([
                         'Jack' => 'hi@jacksleight.com',
                     ]),
