@@ -19,13 +19,6 @@
                     icon="heroicon-s-arrow-left">
                     Back to course
                 </x-filament::button>
-                @if ($this->step)
-                    <x-filament::button
-                        wire:click="$dispatchTo('lesson-step-editor', 'save')"
-                        icon="heroicon-s-check">
-                        Save step
-                    </x-filament::button>
-                @endif
             </div>
         </div>
         @if ($this->step)
@@ -72,6 +65,13 @@
                         icon="heroicon-s-plus">
                         Add step
                     </x-filament::button>
+                    @if ($this->step)
+                        <x-filament::button
+                            wire:click="$dispatchTo('lesson-step-editor', 'save')"
+                            icon="heroicon-s-check">
+                            Save step
+                        </x-filament::button>
+                    @endif
                 </div>
             @endif
         </div>
