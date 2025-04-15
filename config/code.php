@@ -55,8 +55,9 @@ return [
     */
 
     'editor_languages' => [
-        'php' => 'PHP',
         'javascript' => 'JavaScript',
+        'php' => 'PHP',
+        'python' => 'Python',
         'r' => 'R',
     ],
 
