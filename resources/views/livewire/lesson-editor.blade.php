@@ -14,7 +14,7 @@
             </div>
             <div class="flex gap-4">
                 <x-filament::button
-                    tag="a" :href="route('filament.admin.resources.courses.view', $record)"
+                    tag="a" :href="route('filament.admin.resources.courses.view', $record->chapter->course)"
                     color="gray"
                     icon="heroicon-s-arrow-left">
                     Back to course
