@@ -16,7 +16,16 @@ class LessonViewer extends Component
 
     public function mount()
     {
-        $this->stepNumber = $this->stepNumber ?? ($this->steps->count() ? 1 : null);
+        $this->stepNumber = $this->stepNumber
+            ? $this->stepNumber
+            : ($this->steps->count() ? 1 : null);
+    }
+
+    public function updatedStepNumber()
+    {
+        if (! $this->stepNumber && $this->steps->count()) {
+            $this->stepNumber = 1;
+        }
     }
 
     #[Computed]
