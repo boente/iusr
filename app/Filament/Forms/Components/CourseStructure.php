@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Repeater as Repeater;
 use Filament\Support\Enums\Alignment;
+use Livewire\Component;
 
 class CourseStructure
 {
@@ -28,16 +29,16 @@ class CourseStructure
             ->addAction(fn ($action) => $action
                 ->label('Add chapter')
                 ->form(static::chapterForm())
-                ->action(function (Course $record, array $data, Repeater $component) {
+                ->action(function (Course $record, array $data, Component $livewire) {
                     Chapter::create([...$data, 'course_id' => $record->id]);
-                    static::refreshData($component);
+                    $livewire->dispatch('course-structure-updated');
                 }))
             ->deleteAction(fn ($action) => $action
                 ->color('gray')
                 ->requiresConfirmation()
-                ->action(function (array $arguments, Repeater $component) {
+                ->action(function (array $arguments, Repeater $component, Component $livewire) {
                     Chapter::find(static::itemId($component, $arguments))->delete();
-                    static::refreshData($component);
+                    $livewire->dispatch('course-structure-updated');
                 }))
             ->extraItemActions([
                 Action::make('edit')
@@ -46,9 +47,9 @@ class CourseStructure
                     ->fillForm(function (array $arguments, Repeater $component) {
                         return Chapter::find(static::itemId($component, $arguments))->toArray();
                     })
-                    ->action(function (array $arguments, Repeater $component, array $data): void {
+                    ->action(function (array $arguments, Repeater $component, Component $livewire, array $data): void {
                         Chapter::find(static::itemId($component, $arguments))->update($data);
-                        static::refreshData($component);
+                        $livewire->dispatch('course-structure-updated');
                     }),
             ])
             ->schema([
@@ -70,16 +71,16 @@ class CourseStructure
             ->addActionAlignment(Alignment::Start)
             ->addAction(fn ($action) => $action
                 ->form(static::lessonForm())
-                ->action(function (Chapter $record, array $data, Repeater $component) {
+                ->action(function (Chapter $record, array $data, Component $livewire) {
                     Lesson::create([...$data, 'chapter_id' => $record->id]);
-                    static::refreshData($component);
+                    $livewire->dispatch('course-structure-updated');
                 }))
             ->deleteAction(fn ($action) => $action
                 ->color('gray')
                 ->requiresConfirmation()
-                ->action(function (array $arguments, Repeater $component) {
+                ->action(function (array $arguments, Repeater $component, Component $livewire) {
                     Lesson::find(static::itemId($component, $arguments))->delete();
-                    static::refreshData($component);
+                    $livewire->dispatch('course-structure-updated');
                 }))
             ->extraItemActions([
                 Action::make('write')
@@ -94,9 +95,9 @@ class CourseStructure
                     ->fillForm(function (array $arguments, Repeater $component) {
                         return Lesson::find(static::itemId($component, $arguments))->toArray();
                     })
-                    ->action(function (array $arguments, Repeater $component, array $data): void {
+                    ->action(function (array $arguments, Repeater $component, Component $livewire, array $data): void {
                         Lesson::find(static::itemId($component, $arguments))->update($data);
-                        static::refreshData($component);
+                        $livewire->dispatch('course-structure-updated');
                     }),
             ])
             ->schema([
@@ -131,17 +132,5 @@ class CourseStructure
     protected static function itemId(Repeater $component, array $arguments)
     {
         return $component->getItemState($arguments['item'])['id'];
-    }
-
-    protected static function refreshData(Repeater $component)
-    {
-        $component->loadStateFromRelationships();
-        foreach ($component->getChildComponentContainers() as $childComponentContainers) {
-            foreach ($childComponentContainers->getComponents() as $childComponent) {
-                if ($childComponent instanceof Repeater) {
-                    static::refreshData($childComponent);
-                }
-            }
-        }
     }
 }

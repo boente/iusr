@@ -7,6 +7,7 @@ use Filament\Actions;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
+use Livewire\Attributes\On;
 
 class ViewCourse extends EditRecord
 {
@@ -14,6 +15,12 @@ class ViewCourse extends EditRecord
 
     protected static ?string $breadcrumb = 'Structure';
 
+    #[On('course-structure-updated')]
+    public function refreshCourseStructure(): void
+    {
+        $this->refreshFormData([]);
+    }
+    
     public function getTitle(): string|Htmlable
     {
         return $this->record->title;
