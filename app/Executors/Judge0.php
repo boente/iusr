@@ -67,8 +67,8 @@ class Judge0 extends Executor
         $languageId = $language->data['judge0_id'];
 
         $response = $this->makeRequest()
-            ->post($this->config['endpoint'].'/submissions', [
-                'source_code' => $code,
+            ->post($this->config['endpoint'].'/submissions?base64_encoded=true', [
+                'source_code' => base64_encode($code),
                 'language_id' => $languageId,
             ]);
 
@@ -78,9 +78,13 @@ class Judge0 extends Executor
     public function fetchSubmission(string $token): array
     {
         $response = $this->makeRequest()
-            ->get($this->config['endpoint'].'/submissions/'.$token);
+            ->get($this->config['endpoint'].'/submissions/'.$token.'?base64_encoded=true');
 
-        return $response->json();
+        $data = $response->json();
+        $data['stdout'] = base64_decode($data['stdout']);
+        $data['stderr'] = base64_decode($data['stderr']);
+
+        return $data;
     }
 
     public function getLanguages(): array
