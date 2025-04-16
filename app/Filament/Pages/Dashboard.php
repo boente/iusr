@@ -24,7 +24,12 @@ class Dashboard extends Page
     protected function getViewData(): array
     {
         return [
-            'courses' => Course::all(),
+            'courses' => Course::query()
+                ->with('language')
+                ->with('topics')
+                ->with('level')
+                ->with('lessons')
+                ->get(),
         ];
     }
 }

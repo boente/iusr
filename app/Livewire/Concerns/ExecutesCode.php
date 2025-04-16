@@ -10,7 +10,7 @@ trait ExecutesCode
 
     public ?string $error = null;
 
-    public ?bool $correct = false;
+    public ?bool $correct = null;
 
     public function execute($name)
     {

@@ -81,8 +81,8 @@ class Judge0 extends Executor
             ->get($this->config['endpoint'].'/submissions/'.$token.'?base64_encoded=true');
 
         $data = $response->json();
-        $data['stdout'] = base64_decode($data['stdout']);
-        $data['stderr'] = base64_decode($data['stderr']);
+        $data['stdout'] = base64_decode($data['stdout'] ?? '');
+        $data['stderr'] = base64_decode($data['stderr'] ?? '');
 
         return $data;
     }
