@@ -12,7 +12,7 @@ $chapters = $course
 
 <x-filament-panels::page class="py-8">
     @foreach ($chapters as $chapter)
-        <div class="mb-4">
+        <div class="mb-4 scroll-mt-24" id="chapter-{{ $chapter->id }}">
             <h2 class="text-xl font-bold mb-4">{{ $chapter->title }}</h2>
             <div class="grid grid-cols-4 gap-6">
                 @foreach ($chapter->lessons as $lesson)

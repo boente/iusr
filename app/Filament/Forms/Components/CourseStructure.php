@@ -85,10 +85,11 @@ class CourseStructure
                 Action::make('write')
                     ->icon('heroicon-s-code-bracket')
                     ->color('primary')
-                    ->tooltip('Write lesson')
+                    ->tooltip('Write')
                     ->url(fn (array $arguments, Repeater $component): string => route('filament.admin.resources.lessons.edit', ['record' => static::itemId($component, $arguments)])),
                 Action::make('edit')
                     ->icon('heroicon-s-pencil-square')
+                    ->tooltip('Edit')
                     ->form(static::lessonForm())
                     ->fillForm(function (array $arguments, Repeater $component) {
                         return Lesson::find(static::itemId($component, $arguments))->toArray();

@@ -2,11 +2,17 @@
     <div class="grid grid-rows-[auto_1fr_auto] *:min-h-0 h-screen bg-gray-100 dark:bg-gray-950 dark:text-white">
         <div class="px-8 py-3.5 flex justify-between items-center border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
             <div class="flex gap-2 items-center">
-                <span class="font-bold">{{ $record->chapter->course->title }}</span>
+                <a href="{{ route('filament.admin.resources.courses.view', $record->chapter->course) }}" class="font-bold hover:underline">
+                    {{ $record->chapter->course->title }}
+                </a>
                 <x-heroicon-o-chevron-right class="size-4 text-gray-600" />
-                <span>{{ $record->chapter->title }}</span>
+                <a href="{{ route('filament.admin.resources.courses.view', $record->chapter->course) }}" class="font-bold hover:underline">
+                    {{ $record->chapter->title }}
+                </a>
                 <x-heroicon-o-chevron-right class="size-4 text-gray-600" />
-                <span>{{ $record->title }}</span>
+                <a href="{{ route('filament.admin.resources.lessons.edit', [$record]) }}" class="hover:underline">
+                    {{ $record->title }}
+                </a>
                 @if ($this->step)
                     <x-heroicon-o-chevron-right class="size-4 text-gray-600" />
                     <span class="text-primary-500">Step {{ $this->step->number }}</span>

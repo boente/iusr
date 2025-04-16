@@ -79,7 +79,12 @@ class CourseResource extends Resource
                     ->multiple(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->icon('heroicon-s-code-bracket')
+                    ->color('primary')
+                    ->label('Write'),
+                Tables\Actions\EditAction::make()
+                    ->color('gray'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
