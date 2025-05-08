@@ -37,6 +37,20 @@
                 ])>
                     {!! $diff !!}
                 </div>
+                <div class="flex justify-between gap-2">
+                    <x-filament::button
+                        wire:click="retrySolution"
+                        icon="heroicon-o-arrow-left"
+                        color="gray">
+                        Retry
+                    </x-filament::button>
+                    <x-filament::button
+                        wire:click="solveSolution"
+                        icon="heroicon-o-light-bulb"
+                        color="gray">
+                        Solve
+                    </x-filament::button>
+                </div>
             </x-filament::modal>
             <x-filament::icon-button
                 wire:click="showSolution"

@@ -50,6 +50,17 @@ class LessonStepViewer extends Component implements HasForms
         $this->dispatch('open-modal', id: 'solution-modal');
     }
 
+    public function retrySolution()
+    {
+        $this->dispatch('close-modal', id: 'solution-modal');
+    }
+    
+    public function solveSolution()
+    {
+        $this->data['code'] = $this->record->solution;
+        $this->dispatch('close-modal', id: 'solution-modal');
+    }
+
     public function form(Form $form): Form
     {
         return $form
