@@ -60,4 +60,70 @@
             }
         }
     }
+
+    .diff-wrapper.diff {
+        --tab-size: 4;
+        @apply w-full break-all text-sm font-mono bg-zinc-100 dark:bg-black;
+        th {
+            @apply font-semibold cursor-default select-none;
+        }
+        td {
+            @apply align-baseline;
+        }
+        td, th {
+            @apply px-2;
+        }
+        td:empty::after,
+        th:empty::after {
+            content: " ";
+            visibility: hidden;
+        }
+        thead th {
+            @apply bg-zinc-200 px-2 py-1 text-left dark:bg-zinc-800;
+        }
+        tbody {
+            &.skipped {
+                td, th {
+                    @apply hidden;
+                }
+            }
+            th {
+                @apply text-right align-top w-12 font-normal dark:text-zinc-400;
+            }
+        }
+        &.diff-html {
+            @apply whitespace-pre-wrap;
+            tab-size: var(--tab-size);
+            .change {
+                &.change-eq {
+                    .old,
+                    .new {
+                        @apply bg-white dark:bg-zinc-900;
+                    }
+                }
+                .old {
+                    @apply bg-red-100 dark:bg-red-900;
+                }
+                .new {
+                    @apply bg-green-100 dark:bg-green-900;
+                }
+                .old.none,
+                .new.none,
+                .rep.none {
+                    @apply cursor-not-allowed bg-transparent;
+                }
+                ins,
+                del {
+                    @apply font-normal no-underline;
+                }
+                ins {
+                    @apply bg-green-200 dark:bg-green-700;
+                }
+                del {
+                    @apply bg-red-200 dark:bg-red-700;
+                }
+            }
+        }
+    }
+    
 }

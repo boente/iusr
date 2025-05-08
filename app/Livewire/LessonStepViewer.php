@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Filament\Forms\Components\CodeMirror;
 use App\Livewire\Concerns\ExecutesCode;
+use App\Support\Diff;
 use Filament\Forms\Components;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -20,6 +21,8 @@ class LessonStepViewer extends Component implements HasForms
     public ?Model $record = null;
 
     public ?array $data = [];
+
+    public ?string $diff = null;
 
     public function mount()
     {
@@ -40,6 +43,13 @@ class LessonStepViewer extends Component implements HasForms
         // }
     }
 
+    public function showSolution()
+    {
+        $this->diff = Diff::sideBySide($this->data['code'], $this->record->solution);
+
+        $this->dispatch('open-modal', id: 'solution-modal');
+    }
+
     public function form(Form $form): Form
     {
         return $form
@@ -50,6 +60,7 @@ class LessonStepViewer extends Component implements HasForms
                     ]),
                 CodeMirror::make('code')
                     ->executable()
+                    ->diff(fn () => $this->diff)
                     ->solution($this->record->solution)
                     ->language($this->record->language->editor_language),
                 Components\ViewField::make('output')

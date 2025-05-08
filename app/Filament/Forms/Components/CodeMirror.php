@@ -2,16 +2,25 @@
 
 namespace App\Filament\Forms\Components;
 
+use Closure;
 use Filament\Forms\Components\Textarea;
 
 class CodeMirror extends Textarea
 {
     protected string $view = 'filament.components.code-mirror';
 
+    protected string|Closure|null $diff = null;
     protected string|Closure|null $language = null;
     protected string|Closure|null $solution = null;
 
     protected bool|Closure $isExecutable = false;
+
+    public function diff(string|Closure|null $diff): static
+    {
+        $this->diff = $diff;
+
+        return $this;
+    }
 
     public function language(string|Closure|null $language): static
     {
@@ -25,6 +34,11 @@ class CodeMirror extends Textarea
         $this->solution = $solution;
 
         return $this;
+    }
+
+    public function getDiff(): ?string
+    {
+        return $this->evaluate($this->diff);
     }
 
     public function getLanguage(): ?string

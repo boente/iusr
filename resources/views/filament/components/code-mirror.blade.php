@@ -3,6 +3,7 @@
     $state = $getState();
     $name = $getName();
     $isExecutable = $isExecutable();
+    $diff = $getDiff();
     $language = $getLanguage();
     $solution = $getSolution();
 @endphp
@@ -27,20 +28,21 @@
     </div>
     @if ($solution)
         <div class="!absolute bottom-6 left-10">
-            <x-filament::modal width="3xl" :close-button="true">
-                <x-slot name="trigger">
-                    <x-filament::icon-button
-                        icon="heroicon-s-light-bulb"
-                        color="gray">
-                    </x-filament::icon-button>
-                </x-slot>
+            <x-filament::modal width="6xl" :close-button="true" id="solution-modal">
                 <x-slot name="heading">
-                    Solution
+                    Check Your Code
                 </x-slot>
-                <div class="p-4 text-sm font-mono leading-5 ring-1 ring-gray-950/10 dark:ring-white/20 rounded-lg overflow-auto">
-                    <pre class="block">{{ $solution }}</pre>
+                <div @class([
+                    'ring-1 ring-gray-950/10 dark:ring-white/20 rounded-lg overflow-hidden',
+                ])>
+                    {!! $diff !!}
                 </div>
             </x-filament::modal>
+            <x-filament::icon-button
+                wire:click="showSolution"
+                icon="heroicon-s-light-bulb"
+                color="gray">
+            </x-filament::icon-button>
         </div>
     @endif
     @if ($isExecutable)

@@ -12,6 +12,7 @@
         "dutchcodingcompany/filament-developer-logins": "^1.5",
         "dutchcodingcompany/filament-socialite": "^2.4",
         "filament/filament": "^3.2",
+        "jfcherng/php-diff": "^6.16",
         "laravel/framework": "^12.0",
         "laravel/socialite": "^5.18",
         "laravel/tinker": "^2.9",
