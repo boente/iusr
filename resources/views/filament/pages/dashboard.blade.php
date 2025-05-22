@@ -30,7 +30,7 @@ use App\Filament\Pages\Course;
                         </div>
                     @endif
                 </div>
-                <div class="text-sm *:last:mb-0">
+                <div class="text-sm *:last:mb-0 line-clamp-4">
                     {!! $course->description !!}
                 </div>
             </a>

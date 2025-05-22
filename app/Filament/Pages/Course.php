@@ -6,6 +6,7 @@ use App\Models\Course as CourseModel;
 use Filament\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Locked;
 
 class Course extends Page
@@ -26,7 +27,7 @@ class Course extends Page
 
     public function getSubheading(): string|Htmlable|null
     {
-        return strip_tags($this->course->description);
+        return new HtmlString('<div class="pt-1 space-y-4 max-w-4xl">'.$this->course->description.'</div>');
     }
 
     public function mountCanAuthorizeAccess(): void
