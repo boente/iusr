@@ -41,5 +41,14 @@ Alpine.data('codemirror', (data) => ({
             }),
             parent: this.$root,
         });
+        this.$wire.on('code-updated', ({ code }) => {
+            this.editor.dispatch({
+                changes: {
+                    from: 0,
+                    to: this.editor.state.doc.length,
+                    insert: code,
+                },
+            });
+        });
     },
 }));
