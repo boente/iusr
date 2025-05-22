@@ -52,16 +52,20 @@
                     </x-filament::button>
                 </div>
             </x-filament::modal>
-            <x-filament::icon-button
+            <x-filament::button
                 wire:click="showSolution"
+                outlined
+                class="[&>svg]:!text-yellow-400"
                 icon="heroicon-s-light-bulb"
+                label-sr-only
                 color="gray">
-            </x-filament::icon-button>
+                Solution<
+            </x-filament::button>
         </div>
     @endif
     @if ($isExecutable)
         <x-filament::button
-            class="!absolute bottom-6 right-6 text-xl"
+            class="!absolute bottom-6 right-6"
             icon="heroicon-s-play"
             wire:click="execute('{{ $name }}')">
             Run
