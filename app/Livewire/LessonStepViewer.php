@@ -45,7 +45,7 @@ class LessonStepViewer extends Component implements HasForms
 
     public function showSolution()
     {
-        $this->diff = Diff::sideBySide($this->data['code'], $this->record->solution);
+        $this->diff = Diff::sideBySide($this->data['code'] ?? '', $this->record->solution ?? '');
 
         $this->dispatch('open-modal', id: 'solution-modal');
     }
