@@ -7,7 +7,7 @@ use App\Models\Course;
 use App\Models\Lesson;
 use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\Repeater as Repeater;
+use Filament\Forms\Components\Repeater;
 use Filament\Support\Enums\Alignment;
 use Livewire\Component;
 

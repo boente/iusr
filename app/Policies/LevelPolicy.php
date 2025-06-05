@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Level;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class LevelPolicy

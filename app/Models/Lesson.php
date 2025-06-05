@@ -15,7 +15,6 @@ class Lesson extends Model
         });
     }
 
-
     public function chapter()
     {
         return $this->belongsTo(Chapter::class);

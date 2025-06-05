@@ -54,7 +54,7 @@ class LessonStepViewer extends Component implements HasForms
     {
         $this->dispatch('close-modal', id: 'solution-modal');
     }
-    
+
     public function solveSolution()
     {
         $this->data['code'] = $this->record->solution;

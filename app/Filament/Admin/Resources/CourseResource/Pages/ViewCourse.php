@@ -20,7 +20,7 @@ class ViewCourse extends EditRecord
     {
         $this->refreshFormData([]);
     }
-    
+
     public function getTitle(): string|Htmlable
     {
         return $this->record->title;
