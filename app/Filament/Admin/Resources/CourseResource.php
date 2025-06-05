@@ -44,6 +44,9 @@ class CourseResource extends Resource
                             ->searchable()
                             ->preload()
                             ->multiple(),
+                        Forms\Components\Toggle::make('published')
+                            ->label('Published')
+                            ->columnSpanFull(),
                     ])
                     ->columns(2),
             ])
@@ -62,8 +65,9 @@ class CourseResource extends Resource
                 Tables\Columns\TextColumn::make('language.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('level.name'),
-                Tables\Columns\TextColumn::make('topics.name')
-                    ->badge(),
+                Tables\Columns\IconColumn::make('published')
+                    ->boolean()
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('language_id')

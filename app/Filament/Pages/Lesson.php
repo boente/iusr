@@ -34,5 +34,9 @@ class Lesson extends Page
     public function mountCanAuthorizeAccess(): void
     {
         Gate::authorize('view', $this->lesson);
+
+        if (! $this->lesson->chapter->course->published) {
+            abort(404);
+        }
     }
 }

@@ -25,6 +25,7 @@ class Dashboard extends Page
     {
         return [
             'courses' => Course::query()
+                ->published()
                 ->with('language')
                 ->with('topics')
                 ->with('level')

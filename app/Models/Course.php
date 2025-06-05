@@ -6,6 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
+    protected $fillable = [
+        'title',
+        'description',
+        'published',
+        'level_id',
+        'language_id',
+    ];
+
+    protected $casts = [
+        'published' => 'boolean',
+    ];
+
+    public function scopePublished($query)
+    {
+        return $query->where('published', true);
+    }
+
     public function topics()
     {
         return $this->belongsToMany(Topic::class);
