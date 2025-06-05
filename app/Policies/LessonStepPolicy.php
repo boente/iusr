@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\LessonStep;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Gate;
 
 class LessonStepPolicy
 {
@@ -15,7 +16,7 @@ class LessonStepPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_lesson');
+        return Gate::allows('viewAny', 'App\Models\Lesson');
     }
 
     /**
@@ -23,7 +24,7 @@ class LessonStepPolicy
      */
     public function view(User $user, LessonStep $step): bool
     {
-        return $user->can('view_lesson');
+        return Gate::allows('view', $step->lesson);
     }
 
     /**
@@ -31,7 +32,7 @@ class LessonStepPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_lesson');
+        return Gate::allows('create', 'App\Models\Lesson');
     }
 
     /**
@@ -39,7 +40,7 @@ class LessonStepPolicy
      */
     public function update(User $user, LessonStep $step): bool
     {
-        return $user->can('update_lesson');
+        return Gate::allows('update', $step->lesson);
     }
 
     /**
@@ -47,7 +48,7 @@ class LessonStepPolicy
      */
     public function delete(User $user, LessonStep $step): bool
     {
-        return $user->can('delete_lesson');
+        return Gate::allows('delete', $step->lesson);
     }
 
     /**
@@ -55,7 +56,7 @@ class LessonStepPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_lesson');
+        return Gate::allows('deleteAny', 'App\Models\Lesson');
     }
 
     /**
@@ -63,7 +64,7 @@ class LessonStepPolicy
      */
     public function forceDelete(User $user, LessonStep $step): bool
     {
-        return $user->can('force_delete_lesson');
+        return Gate::allows('forceDelete', $step->lesson);
     }
 
     /**
@@ -71,7 +72,7 @@ class LessonStepPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_lesson');
+        return Gate::allows('forceDeleteAny', 'App\Models\Lesson');
     }
 
     /**
@@ -79,7 +80,7 @@ class LessonStepPolicy
      */
     public function restore(User $user, LessonStep $step): bool
     {
-        return $user->can('restore_lesson');
+        return Gate::allows('restore', $step->lesson);
     }
 
     /**
@@ -87,7 +88,7 @@ class LessonStepPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_lesson');
+        return Gate::allows('restoreAny', 'App\Models\Lesson');
     }
 
     /**
@@ -95,7 +96,7 @@ class LessonStepPolicy
      */
     public function replicate(User $user, LessonStep $step): bool
     {
-        return $user->can('replicate_lesson');
+        return Gate::allows('replicate', $step->lesson);
     }
 
     /**
@@ -103,6 +104,6 @@ class LessonStepPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_lesson');
+        return Gate::allows('reorder', 'App\Models\Lesson');
     }
 }

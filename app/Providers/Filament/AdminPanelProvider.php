@@ -68,6 +68,7 @@ class AdminPanelProvider extends PanelProvider
                     ->enabled(app()->isLocal())
                     ->users([
                         'Jack' => 'hi@jacksleight.com',
+                        'John' => 'john@example.com',
                     ]),
                 FilamentShieldPlugin::make()
                     ->gridColumns([

@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources;
 use App\Filament\Admin\Resources\CourseResource\Pages;
 use App\Filament\Forms\Components\CourseStructure;
 use App\Models\Course;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
@@ -12,7 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class CourseResource extends Resource
+class CourseResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Course::class;
 
@@ -57,11 +58,25 @@ class CourseResource extends Resource
     {
         return $table
             ->defaultSort('title')
-            ->recordUrl(fn ($record) => route('filament.admin.resources.courses.view', $record))
+            ->recordUrl(fn ($record) => auth()->user()->can('update', $record)
+                ? route('filament.admin.resources.courses.view', $record)
+                : null)
+            ->modifyQueryUsing(function ($query) {
+                $user = auth()->user();
+                if (! $user->can('update_course') && $user->can('update_own_course')) {
+                    $query->where('user_id', $user->id);
+                }
+
+                return $query;
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('owner.name')
+                    ->label('Owner')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('language.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('level.name'),
@@ -86,13 +101,16 @@ class CourseResource extends Resource
                 Tables\Actions\ViewAction::make()
                     ->icon('heroicon-s-code-bracket')
                     ->color('primary')
-                    ->label('Write'),
+                    ->label('Write')
+                    ->visible(fn ($record) => auth()->user()->can('update', $record)),
                 Tables\Actions\EditAction::make()
-                    ->color('gray'),
+                    ->color('gray')
+                    ->visible(fn ($record) => auth()->user()->can('update', $record)),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->visible(fn () => auth()->user()->can('delete_any_course')),
                 ]),
             ]);
     }
@@ -101,6 +119,21 @@ class CourseResource extends Resource
     {
         return [
 
+        ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'update_own',
+            'reorder',
+            'delete',
+            'delete_own',
+            'delete_any',
         ];
     }
 

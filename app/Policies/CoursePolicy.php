@@ -39,7 +39,16 @@ class CoursePolicy
      */
     public function update(User $user, Course $course): bool
     {
-        return $user->can('update_course');
+        return $user->can('update_course') ||
+               ($user->can('update_own_course') && $course->user_id === $user->id);
+    }
+
+    /**
+     * Determine whether the user can update their own courses.
+     */
+    public function updateOwn(User $user, Course $course): bool
+    {
+        return $user->can('update_own_course') && $course->user_id === $user->id;
     }
 
     /**
@@ -47,7 +56,16 @@ class CoursePolicy
      */
     public function delete(User $user, Course $course): bool
     {
-        return $user->can('delete_course');
+        return $user->can('delete_course') ||
+               ($user->can('delete_own_course') && $course->user_id === $user->id);
+    }
+
+    /**
+     * Determine whether the user can delete their own courses.
+     */
+    public function deleteOwn(User $user, Course $course): bool
+    {
+        return $user->can('delete_own_course') && $course->user_id === $user->id;
     }
 
     /**

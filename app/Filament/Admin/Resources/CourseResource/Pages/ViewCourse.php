@@ -30,7 +30,8 @@ class ViewCourse extends EditRecord
     {
         return [
             Actions\Action::make('edit')
-                ->url(fn () => route('filament.admin.resources.courses.edit', $this->record)),
+                ->url(fn () => route('filament.admin.resources.courses.edit', $this->record))
+                ->visible(fn () => auth()->user()->can('update', $this->record)),
         ];
     }
 

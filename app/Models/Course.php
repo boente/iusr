@@ -12,6 +12,7 @@ class Course extends Model
         'published',
         'level_id',
         'language_id',
+        'user_id',
     ];
 
     protected $casts = [
@@ -36,6 +37,11 @@ class Course extends Model
     public function level()
     {
         return $this->belongsTo(Level::class);
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function chapters()
