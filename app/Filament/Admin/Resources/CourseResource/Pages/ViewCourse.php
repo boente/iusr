@@ -7,6 +7,7 @@ use Filament\Actions;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 
 class ViewCourse extends EditRecord
@@ -31,7 +32,7 @@ class ViewCourse extends EditRecord
         return [
             Actions\Action::make('edit')
                 ->url(fn () => route('filament.admin.resources.courses.edit', $this->record))
-                ->visible(fn () => auth()->user()->can('update', $this->record)),
+                ->visible(fn () => Auth::user()->can('update', $this->record)),
         ];
     }
 

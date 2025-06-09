@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources\CourseResource\Pages;
 use App\Filament\Admin\Resources\CourseResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\Facades\Auth;
 
 class EditCourse extends EditRecord
 {
@@ -14,7 +15,7 @@ class EditCourse extends EditRecord
     {
         return [
             Actions\DeleteAction::make()
-                ->visible(fn () => auth()->user()->can('delete', $this->record)),
+                ->visible(fn () => Auth::user()->can('delete', $this->record)),
         ];
     }
 }

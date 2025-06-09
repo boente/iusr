@@ -69,6 +69,7 @@ class AdminPanelProvider extends PanelProvider
                     ->users([
                         'Jack' => 'hi@jacksleight.com',
                         'John' => 'john@example.com',
+                        'Mark' => 'mark@example.com',
                     ]),
                 FilamentShieldPlugin::make()
                     ->gridColumns([

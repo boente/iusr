@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Resources\CourseResource\Pages;
 
 use App\Filament\Admin\Resources\CourseResource;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\Facades\Auth;
 
 class CreateCourse extends CreateRecord
 {
@@ -11,7 +12,7 @@ class CreateCourse extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['user_id'] = auth()->user()->id;
+        $data['user_id'] = Auth::user()->id;
 
         return $data;
     }

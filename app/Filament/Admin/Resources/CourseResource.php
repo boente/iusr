@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class CourseResource extends Resource implements HasShieldPermissions
 {
@@ -58,12 +59,12 @@ class CourseResource extends Resource implements HasShieldPermissions
     {
         return $table
             ->defaultSort('title')
-            ->recordUrl(fn ($record) => auth()->user()->can('update', $record)
+            ->recordUrl(fn ($record) => Auth::user()->can('update', $record)
                 ? route('filament.admin.resources.courses.view', $record)
                 : null)
             ->modifyQueryUsing(function ($query) {
-                $user = auth()->user();
-                if (! $user->can('update_course') && $user->can('update_own_course')) {
+                $user = Auth::user();
+                if (! $user->can('view_any_course')) {
                     $query->where('user_id', $user->id);
                 }
 
@@ -102,15 +103,15 @@ class CourseResource extends Resource implements HasShieldPermissions
                     ->icon('heroicon-s-code-bracket')
                     ->color('primary')
                     ->label('Write')
-                    ->visible(fn ($record) => auth()->user()->can('update', $record)),
+                    ->visible(fn ($record) => Auth::user()->can('update', $record)),
                 Tables\Actions\EditAction::make()
                     ->color('gray')
-                    ->visible(fn ($record) => auth()->user()->can('update', $record)),
+                    ->visible(fn ($record) => Auth::user()->can('update', $record)),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
-                        ->visible(fn () => auth()->user()->can('delete_any_course')),
+                        ->visible(fn () => Auth::user()->can('delete_any_course')),
                 ]),
             ]);
     }
@@ -129,10 +130,9 @@ class CourseResource extends Resource implements HasShieldPermissions
             'view_any',
             'create',
             'update',
-            'update_own',
+            'update_any',
             'reorder',
             'delete',
-            'delete_own',
             'delete_any',
         ];
     }

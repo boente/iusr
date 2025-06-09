@@ -57,6 +57,8 @@ class AppPanelProvider extends PanelProvider
                     ->enabled(app()->isLocal())
                     ->users([
                         'Jack' => 'hi@jacksleight.com',
+                        'John' => 'john@example.com',
+                        'Mark' => 'mark@example.com',
                     ]),
                 FilamentSocialitePlugin::make()
                     ->providers([
