@@ -17,9 +17,5 @@ return new class extends Migration
         if ($superAdmin) {
             \DB::table('courses')->whereNull('user_id')->update(['user_id' => $superAdmin->id]);
         }
-
-        Schema::table('courses', function (Blueprint $table) {
-            $table->foreignId('user_id')->nullable(false)->change();
-        });
     }
 };
